@@ -48,3 +48,12 @@ via `repos_url`
 - `updated_at` (Date)
 
 Follow stargazers, issues and pulls to get more info about the quality of each repo
+
+### [events](http://developer.github.com/v3/activity/events/)
+
+    curl -k https://api.github.com/users/<username>/received_events
+
+Potentially these could be used to get delta info about others that follow, star a repo or PR on one for a given user.
+We'd just need to filter all events that are about the user or one of his/her repos.
+
+This is a whole lot info that comes down in one request and maybe a way to work within the github rate limit.
