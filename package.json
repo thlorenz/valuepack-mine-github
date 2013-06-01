@@ -1,26 +1,39 @@
 {
-    "name" : "valuepack-mine-github",
-    "version" : "0.0.0",
-    "description" : "Mines github for user and repository data used by valuepack.",
-    "main" : "index.js",
-    "scripts" : {
-        "test" : "tap test/*.js"
-    },
-    "repository" : {
-        "type" : "git",
-        "url" : "git://github.com/thlorenz/valuepack-mine-github.git"
-    },
-    "homepage" : "https://github.com/thlorenz/valuepack-mine-github",
-    "dependencies" : {
-    },
-    "devDependencies" : {
-    },
-  "keywords": [ "mine", "github", "valuepack", "leveldb", "level", "db", "information" ],
-    "author" : {
-        "name" : "Thorsten Lorenz",
-        "email" : "thlorenz@gmx.de",
-        "url" : "http://thlorenz.com"
-    },
-    "license" : "MIT",
-    "engine" : { "node" : ">=0.6" }
+  "name": "valuepack-mine-github",
+  "version": "0.0.0",
+  "description": "Mines github for user and repository data used by valuepack.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/valuepack-mine-github.git"
+  },
+  "homepage": "https://github.com/thlorenz/valuepack-mine-github",
+  "dependencies": {
+    "level-dump": "~0.1.0",
+    "request": "~2.21.0",
+    "level-sublevel": "~4.6.12",
+    "level": "~0.9.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "mine",
+    "github",
+    "valuepack",
+    "leveldb",
+    "level",
+    "db",
+    "information"
+  ],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.6"
+  }
 }
