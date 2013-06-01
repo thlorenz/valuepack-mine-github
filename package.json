@@ -1,0 +1,26 @@
+{
+    "name" : "valuepack-mine-github",
+    "version" : "0.0.0",
+    "description" : "Mines github for user and repository data used by valuepack.",
+    "main" : "index.js",
+    "scripts" : {
+        "test" : "tap test/*.js"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/thlorenz/valuepack-mine-github.git"
+    },
+    "homepage" : "https://github.com/thlorenz/valuepack-mine-github",
+    "dependencies" : {
+    },
+    "devDependencies" : {
+    },
+  "keywords": [ "mine", "github", "valuepack", "leveldb", "level", "db", "information" ],
+    "author" : {
+        "name" : "Thorsten Lorenz",
+        "email" : "thlorenz@gmx.de",
+        "url" : "http://thlorenz.com"
+    },
+    "license" : "MIT",
+    "engine" : { "node" : ">=0.6" }
+}
