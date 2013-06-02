@@ -16,6 +16,10 @@ Try to get one for each npm user
 - followers (count)
 - following (count)
 
+#### urls
+
+May not need to store or even get them since they can be constructed from user/rep
+
 - `followers_url`
 - `repos_url`
 
@@ -38,14 +42,22 @@ via `repos_url`
 - name
 - **fullname** (`<user>/<reponame>`)
 - *description*
-- fork (true|false)
+- fork (true|false) - may ignore forks for now
 - forks (count)
 - watchers (count)
+- language: (only include 'JavaScript|CoffeeScript' for now
+- `open_issues` (count)
+- `has_issues` (is user allowing to post issues)
+- `created_at` (Date) these two may be needed to value maturity/liveliness
+- `updated_at` (Date) 
+
+#### urls
+
+May not need to store them since they can be constructed from user/rep
+
 - `stargazers_url`
 - `issues_url`
 - `pulls_url`
-- `created_at` (Date)
-- `updated_at` (Date)
 
 Follow stargazers, issues and pulls to get more info about the quality of each repo
 
@@ -57,3 +69,12 @@ Potentially these could be used to get delta info about others that follow, star
 We'd just need to filter all events that are about the user or one of his/her repos.
 
 This is a whole lot info that comes down in one request and maybe a way to work within the github rate limit.
+
+### Repos vs. User Info
+
+Each repo includes certain user info as well. The following values are missing from it however:
+
+- public repos: don't need this, just count number of repos returned
+- **followers:** only need this if we don't need to know who is following, otherwise we can just count 'em when we get 'em
+- following: probably don't need it
+- `public_gists`: may not need this
