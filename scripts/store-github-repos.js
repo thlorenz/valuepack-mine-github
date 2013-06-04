@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 /*jshint asi: true */
 
@@ -27,6 +29,7 @@ function retrieve(db, cb) {
 
   dump[what](sub, function(err) { cb(err, db) })
 }
+
 var storeGithubRepos = module.exports = function (db, cb) {
   var dataDir  =  path.join(__dirname, '..', 'data')
     , jsonPath =  path.join(dataDir, 'users-thlorenz-repos.json')
