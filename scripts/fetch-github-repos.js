@@ -29,7 +29,6 @@ fetch(
     }
   , function (err, res) {
       if (err) return console.error(err)
-//      if (!res.modified) return console.log('not modified')
 
       console.log(JSON.stringify(res, null, 2));
   });

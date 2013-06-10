@@ -16,14 +16,19 @@ var path       =  require('path')
 function retrieve(db, cb) {
   db = sublevel(db);
 
-  var repos = db.sublevel(github.repos, { valueEncoding: 'json' })
-    , byOwner = db.sublevel(github.byOwner, { valueEncoding: 'utf8' })
+  var githubRepos =  db.sublevel(github.repos, { valueEncoding: 'json' })
+    , githubUsers =  db.sublevel(github.users, { valueEncoding: 'json' })
+    , usersMeta   =  db.sublevel(github.usersMeta, { valueEncoding: 'json' })
+    , byOwner     =  db.sublevel(github.byOwner, { valueEncoding: 'utf8' })
+    ;
 
-  var sub = repos
+  var sub = githubRepos
     , what = 'all'
     , argv = process.argv;
 
   if (~argv.indexOf('--owner')) sub = byOwner
+  if (~argv.indexOf('--meta')) sub = usersMeta
+  if (~argv.indexOf('--users')) sub = githubUsers
   if (~argv.indexOf('--keys')) what = 'keys'
   if (~argv.indexOf('--values')) what = 'values'
 
@@ -32,7 +37,7 @@ function retrieve(db, cb) {
 
 var storeGithubRepos = module.exports = function (db, cb) {
   var dataDir  =  path.join(__dirname, '..', 'data')
-    , jsonPath =  path.join(dataDir, 'users-thlorenz-repos.json')
+    , jsonPath =  path.join(dataDir, 'thlorenz.json')
 
   if (!existsSync(jsonPath)) 
     return console.error('Cannot find %s. Please make sure to run fetch-npm-users first', jsonPath);
