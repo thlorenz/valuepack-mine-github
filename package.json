@@ -18,7 +18,8 @@
     "level": "~0.9.0",
     "valuepack-core": "~0.1.2",
     "xtend": "~2.0.5",
-    "request-all-pages": "~0.1.3"
+    "request-all-pages": "~0.1.3",
+    "runnel": "~0.3.0"
   },
   "devDependencies": {},
   "keywords": [
