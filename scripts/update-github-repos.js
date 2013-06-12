@@ -16,7 +16,7 @@ leveldb.open(function (err, db) {
   if (err) return leveldb.close(err);
   db = require('level-sublevel')(db);
   update(db, username, function (err, res) {
-    if (err) console.error(err);
+    if (err) return console.error(err);
     console.error('remaining', res.remaining);
     leveldb.close();
   });
