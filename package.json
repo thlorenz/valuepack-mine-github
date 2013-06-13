@@ -20,7 +20,9 @@
     "xtend": "~2.0.5",
     "request-all-pages": "~0.1.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tap": "~0.4.3"
+  },
   "keywords": [
     "mine",
     "github",
