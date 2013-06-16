@@ -17,7 +17,7 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
   var db = sublevel(level(null, { valueEncoding: 'json' }))
   
   store(db, json, function (err, res) {
-    t.plan(2)
+    t.plan(5)
 
     t.notOk(err, 'no error')
     
@@ -69,7 +69,7 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
       )
     })
 
-    test('\n# stores user correctly', function (t) {
+    t.test('\n# stores user correctly', function (t) {
       var users = []
       dump(
           res.sublevels.githubUsers
@@ -91,7 +91,50 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
             t.end()
           }
       )
-      
+    })
+
+    t.test('\n# stores user meta data correctly', function (t) {
+      var metas = []
+      dump(
+          res.sublevels.usersMeta
+        , [].push.bind(metas)
+        , function (err) {
+            if (err) console.error(err);
+
+            var fst = metas[0]
+
+            t.equal(fst.key, 'isaacs', 'stores the user meta data')
+            t.deepEqual(
+                fst.value
+              , { name                :  'isaacs',
+                  detailsLastModified :  'Fri, 14 Jun 2013 00:58:14 GMT',
+                  reposLastModified   :  'Fri, 14 Jun 2013 00:00:45 GMT' }
+              , 'including info about last modified date of repos and user details'
+            )
+
+            t.end()
+          }
+      )
+    })
+
+    t.test('\n# indexes repos by owner', function (t) {
+      var owners = []
+      dump(
+          res.sublevels.byOwner
+        , [].push.bind(owners)
+        , function (err) {
+            if (err) console.error(err);
+
+            t.deepEqual(
+                owners
+              , [ { key: 'isaacsÿabbrev-js'    ,  value: '"isaacs/abbrev-js"'    } ,
+                  { key: 'isaacsÿarg-parse-js' ,  value: '"isaacs/arg-parse-js"' } ]
+              , 'indexes both repos by the owning user'
+            )
+
+            t.end()
+          }
+      )
     })
   })
 })
