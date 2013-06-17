@@ -78,3 +78,21 @@ Each repo includes certain user info as well. The following values are missing f
 - **followers:** only need this if we don't need to know who is following, otherwise we can just count 'em when we get 'em
 - following: probably don't need it
 - `public_gists`: may not need this
+
+### Determine who starred what
+
+Two options:
+
+#### For each user determine what repos he starred
+
+    curl https://api.github.com/users/thlorenz/starred
+
+Advantage: get this once per user
+Disadvantage: a bit harder to analyze
+
+#### For each repo figure out who starred it
+
+    curl https://api.github.com/repos/isaacs/abbrev-js/stargazers
+
+Advantage: somewhat easier to analyze
+Disadvantage: get this once for every repo
