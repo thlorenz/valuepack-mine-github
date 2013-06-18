@@ -14,7 +14,7 @@
   "dependencies": {
     "request": "~2.21.0",
     "xtend": "~2.0.5",
-    "request-all-pages": "~0.1.3",
+    "request-all-pages": "~0.1.4",
     "valuepack-core": "~0.2.1"
   },
   "devDependencies": {
