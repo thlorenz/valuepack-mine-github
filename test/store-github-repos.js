@@ -16,8 +16,8 @@ var json = fs.readFileSync(__dirname + '/fixtures/repos-isaacs.json', 'utf8')
 test('\nwhen storing user with 5 followers and 3 repos one of which is php', function (t) {
   var db = sublevel(level(null, { valueEncoding: 'json' }))
   
-  store(db, json, function (err, res) {
-    t.plan(5)
+  store(db, json, 'isaacs', function (err, res) {
+    t.plan(6)
 
     t.notOk(err, 'no error')
     
@@ -93,6 +93,28 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
       )
     })
 
+    t.test('\n# stores user starred repos correctly', function (t) {
+      var starred = []
+      dump(
+          res.sublevels.githubStarred
+        , [].push.bind(starred)
+        , function (err) {
+            if (err) console.error(err);
+            var fst = starred[0]
+            
+            t.equal(fst.key, 'isaacs', 'stores starred repos under user name')
+            t.equal(starred.length, 1, 'stores starred repos only for that user')
+            t.deepEqual(
+                fst.value.repos
+              , [ 'dominictarr/stream-punks', 'isaacs/chmodr', 'isaacs/canonical-host' ]
+              , 'adds all starred repos with full name'
+            )
+            t.equal(fst.value.count, 3, 'calculates starred repo count correctly')
+            t.end()
+          }
+      )
+    })
+
     t.test('\n# stores user meta data correctly', function (t) {
       var metas = []
       dump(
@@ -108,7 +130,8 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
                 fst.value
               , { name                :  'isaacs',
                   detailsLastModified :  'Fri, 14 Jun 2013 00:58:14 GMT',
-                  reposLastModified   :  'Fri, 14 Jun 2013 00:00:45 GMT' }
+                  reposLastModified   :  'Fri, 14 Jun 2013 00:00:45 GMT',
+                  starredLastModified :  'Mon, 14 Dec 2009 22:31:05 GMT' }
               , 'including info about last modified date of repos and user details'
             )
 

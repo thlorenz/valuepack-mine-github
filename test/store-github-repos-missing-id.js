@@ -23,8 +23,10 @@ test('\nwhen storing existing user and repos were not modified', function (t) {
   var db = sublevel(level(null, { valueEncoding: 'json' }))
   
   
-  store(db, jsonWithRepos, function () {
-    store(db, jsonWithoutRepos, function (err, res) {
+  store(db, jsonWithRepos, 'isaacs', function () {
+    store(db, jsonWithoutRepos, 'isaacs', function (err, res) {
+
+        
         var users = []
         dump(
             res.sublevels.githubUsers
