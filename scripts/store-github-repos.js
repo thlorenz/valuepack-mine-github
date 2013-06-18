@@ -36,11 +36,19 @@ function retrieve(db, cb) {
 }
 
 var storeGithubRepos = module.exports = function (db, cb) {
+  var filename =  process.argv[2];
+
+  if (!filename) {
+    console.error('To store data, please pass file name of file residing in data dir, i.e.:\n\tstore-github-repos.js issacs.json');
+    console.error('To read data, please add --read flag, i.e.\n\tstore-github-repos.js --read --owner --keys');
+    process.exit(1);
+  }
+
   var dataDir  =  path.join(__dirname, '..', 'data')
-    , jsonPath =  path.join(dataDir, 'thlorenz.json')
+    , jsonPath =  path.join(dataDir, filename)
 
   if (!existsSync(jsonPath)) 
-    return console.error('Cannot find %s. Please make sure to run fetch-npm-users first', jsonPath);
+    return console.error('Cannot find %s. Please make sure to run fetch-github-repos first', jsonPath);
     
   var json = fs.readFileSync(jsonPath, 'utf8')
   
