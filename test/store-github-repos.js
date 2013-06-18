@@ -11,6 +11,7 @@ var test     =  require('tap').test
 // file contains the following data:
 //  user with 5 followers, dwcook, tomplays, jasonkostempski, jeffchuber, daaku
 //  3 repos(1 php, 2 javascript) 
+//  4 starred repos, 2 by the github user
 var json = fs.readFileSync(__dirname + '/fixtures/repos-isaacs.json', 'utf8')
 
 test('\nwhen storing user with 5 followers and 3 repos one of which is php', function (t) {
@@ -106,10 +107,10 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
             t.equal(starred.length, 1, 'stores starred repos only for that user')
             t.deepEqual(
                 fst.value.repos
-              , [ 'dominictarr/stream-punks', 'isaacs/chmodr', 'isaacs/canonical-host' ]
-              , 'adds all starred repos with full name'
+              , [ 'dominictarr/stream-punks', 'Raynos/routil-static' ]
+              , 'adds all starred repos that are not by the user with full name'
             )
-            t.equal(fst.value.count, 3, 'calculates starred repo count correctly')
+            t.equal(fst.value.count, 2, 'calculates starred repo count correctly')
             t.end()
           }
       )
