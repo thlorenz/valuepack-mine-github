@@ -17,7 +17,7 @@ var json = fs.readFileSync(__dirname + '/fixtures/repos-isaacs.json', 'utf8')
 test('\nwhen storing user with 5 followers and 3 repos one of which is php', function (t) {
   var db = sublevel(level(null, { valueEncoding: 'json' }))
   
-  store(db, json, 'isaacs', function (err, res) {
+  store(db, JSON.parse(json), 'isaacs', function (err, res) {
     t.plan(6)
 
     t.notOk(err, 'no error')

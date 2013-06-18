@@ -46,7 +46,7 @@ var storeGithubRepos = module.exports = function (db, cb) {
   
   db = sublevel(db)
 
-  store(db, 'thlorenz', json,  function (err, subs) {
+  store(db, JSON.parse(json), 'thlorenz', function (err, subs) {
     if (err) return cb(err, db);
     console.log('Stored all github repos at: ', leveldb.location);
     cb(null, db)
