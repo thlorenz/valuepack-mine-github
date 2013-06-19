@@ -2,17 +2,15 @@
 
 'use strict';
 
-var leveldb  =  require('valuepack-core/mine/leveldb')
-  , update   =  require('../lib/update-multiple-github-users')
-  , argv     =  process.argv
-  , usernames =  argv[2];
+var leveldb   =  require('valuepack-core/mine/leveldb')
+  , update    =  require('../lib/update-multiple-github-users')
+  , argv      =  process.argv
+  , usernames =  argv.slice(2)
 
-/*if (!username) {
-  console.error('Usage: update-github-repos <username>');
+if (!usernames.length) {
+  console.error('Usage: update-github-repos <username1> [username2...]');
   process.exit(1);
-}*/
-
-var usernames = [ 'substack', 'danielmoore', 'thlorenz' ];
+}
 
 leveldb.open(function (err, db) {
   if (err) return leveldb.close(err);
