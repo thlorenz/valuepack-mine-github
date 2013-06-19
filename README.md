@@ -64,6 +64,7 @@ Run the update multiple users script:
     ./update-multiple-github-users.js substack isaacs visionmedia
 
 **Note:** Only `JavaScript` or `CoffeeScript` (I'm being nice ;) ) repos are stored.
+
 **Note:** Forks are currently ignored as well, but that may changej
 
 ### query the data
