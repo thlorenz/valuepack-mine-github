@@ -34,20 +34,18 @@ used to increase github rate limit to 5K
 - `VALUEPACK_GITHUB_CLIENT_ID`
 - `VALUEPACK_GITHUB_CLIENT_SECRET`
 
+```sh
+export VALUEPACK_GITHUB_CLIENT_ID=0i0d0
+export VALUEPACK_GITHUB_CLIENT_SECRET=0s0e0c0r0e0t
+```
+
 You can run the below scripts without these, but will run will hit the unauthorized rate limit (60/hr) fairly quick.
 
 ### database path
 
 - `VALUEPACK_MINE_DB` the path at which the leveldb data is stored (defaults to `valuepack-mine-npm/store/valuepack-mine.db`)
 
-Make sure to include them every time you execute a script or add the following to your `.bashrc` (example):
-
-### client id and secret
-
-```sh
-export VALUEPACK_GITHUB_CLIENT_ID=0i0d0
-export VALUEPACK_GITHUB_CLIENT_SECRET=0s0e0c0r0e0t
-```
+Make sure to include it every time you execute a script or add the following to your `.bashrc` (example):
 
 ### initializing the data store
 
