@@ -4,7 +4,8 @@
   "description": "Mines github for user and repository data used by valuepack.",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "tap test/*.js",
+    "init": "cd ./scripts && ./init.sh"
   },
   "repository": {
     "type": "git",
