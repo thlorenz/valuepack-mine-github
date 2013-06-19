@@ -39,7 +39,7 @@ export VALUEPACK_GITHUB_CLIENT_ID=0i0d0
 export VALUEPACK_GITHUB_CLIENT_SECRET=0s0e0c0r0e0t
 ```
 
-You can run the below scripts without these, but will run will hit the unauthorized rate limit (60/hr) fairly quick.
+You can run the below scripts without these, but will hit the unauthorized rate limit (60/hr) fairly quick.
 
 ### database path
 
