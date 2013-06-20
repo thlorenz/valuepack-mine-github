@@ -19,6 +19,15 @@ exports.clientIdSecretQuery =  require('./lib/client-id-secret-query');
 exports.updateMultipleUsers =  require('./lib/update-multiple-github-users');
 ```
 
+## example
+
+```js
+var update = require('valuepack-mine-github');
+update(usernames, function () {
+  console.error('Successfully updated ', usernames);
+});
+```
+
 ## scripts
 
 You can play with scripts inside `./scripts`.
