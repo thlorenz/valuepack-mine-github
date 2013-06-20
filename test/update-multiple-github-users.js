@@ -77,3 +77,30 @@ test('\nupdating two users, no errors, not enough remaining', function (t) {
       t.deepEqual(stored.map(function (x) { return x.user }), [ 'uno', 'dos' ], 'stores both users')
     })
 })
+
+test('\nupdating ten users at concurrency 3, no errors, lots remaining', function (t) {
+
+  function updateRepos(db, user, cb) {
+    setTimeout(cb.bind(null, null, { user: user, remaining: 999, modifieds: 'the modifieds' }), 5)
+  }
+  
+  var updateMultiple = proxyquire(
+      '../lib/update-multiple-github-users'
+    , { './update-github-repos': updateRepos }
+  )
+
+  var stored = []
+  updateMultiple('the db', [ 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez' ], { concurrency: 3 } )
+    .on('error', t.fail.bind(null)) 
+    .on('pause', t.fail.bind(null, 'should not pause'))
+    .on('stored', [].push.bind(stored))
+    .on('end', function () {
+      t.deepEqual(
+          stored.map(function (x) { return x.user })
+        , [ 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez' ]
+        , 'stores all 10 users'
+      )
+
+      t.end()
+    });
+})
