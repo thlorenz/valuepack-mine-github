@@ -15,8 +15,8 @@
   "dependencies": {
     "request": "~2.21.0",
     "xtend": "~2.0.5",
-    "request-all-pages": "~0.1.4",
-    "valuepack-core": "~0.2.1"
+    "valuepack-core": "~0.2.1",
+    "request-all-pages": "~0.2.0"
   },
   "devDependencies": {
     "tap": "~0.4.3",
