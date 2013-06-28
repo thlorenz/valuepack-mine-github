@@ -12,19 +12,19 @@ var fetch =  require('../lib/fetch-github-repos')
 var detailsIdx = argv.indexOf('--nodetails')
 if (~detailsIdx) {
   details = false
-  argv.slice(detailsIdx, 1)
+  argv.splice(detailsIdx, 1)
 }
 
 var starredIdx = argv.indexOf('--nostarred')
 if (~starredIdx) {
   starred = false
-  argv.slice(starredIdx, 1)
+  argv.splice(starredIdx, 1)
 }
 
-var user = process.argv[2]
+var user = argv[2]
 
 if(!user) {
-  console.log('Usage: ./fetch-github-repos isaacs [--nodetails] [-nostarred]')
+  console.error('Usage: ./fetch-github-repos isaacs [--nodetails] [-nostarred]')
   process.exit(1)
 }
 

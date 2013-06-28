@@ -7,8 +7,8 @@ var test         =  require('tap').test
   , lastModified =  Date(5)
   , resource     =  'repos'
 
-function passThru(mixed, pages, cb) {
-  cb(null, { body: pages, mixedModifieds: mixed })
+function passThru(mixed, pages) {
+  return { body: pages, mixedModifieds: mixed };
 }
 
 test('\nrequest all pages without error', function (t) {
@@ -84,9 +84,9 @@ test('\nrequest all pages results in mixed modifieds the first time', function (
             cb(null, 'handled pages') 
           }
       , './handle-pages': 
-          function (pages, cb) {
+          function (pages) {
             var mixed = requests === 1
-            passThru(mixed, pages, cb) 
+            return passThru(mixed, pages) 
           }
       }
   )
@@ -99,7 +99,7 @@ test('\nrequest all pages results in mixed modifieds the first time', function (
   })
 })
 
-/*
+
 test('\nrequest all pages results in mixed modifieds twice', function (t) {
   t.plan(4)
   var requests = 0
@@ -114,9 +114,9 @@ test('\nrequest all pages results in mixed modifieds twice', function (t) {
             cb(null, 'handled pages') 
           }
       , './handle-pages': 
-          function (pages, cb) {
+          function (pages) {
             var mixed = requests <= 2 
-            passThru(mixed, pages, cb) 
+            return passThru(mixed, pages) 
           }
       }
   )
@@ -127,4 +127,4 @@ test('\nrequest all pages results in mixed modifieds twice', function (t) {
     t.deepEqual(lastModifieds[0], lastModified, 'first time with last modified passed')
     t.deepEqual(lastModifieds[1], new Date(0) , 'second time with minimum date as last modified')
   })
-})*/
+})
