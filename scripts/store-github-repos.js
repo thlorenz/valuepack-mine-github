@@ -16,19 +16,21 @@ var path       =  require('path')
 function retrieve(db, cb) {
   db = sublevel(db);
 
-  var githubRepos =  db.sublevel(github.repos, { valueEncoding: 'json' })
-    , githubUsers =  db.sublevel(github.users, { valueEncoding: 'json' })
-    , usersMeta   =  db.sublevel(github.usersMeta, { valueEncoding: 'json' })
-    , byOwner     =  db.sublevel(github.byOwner, { valueEncoding: 'utf8' })
+  var githubRepos   =  db.sublevel(github.repos, { valueEncoding: 'json' })
+    , githubUsers   =  db.sublevel(github.users, { valueEncoding: 'json' })
+    , usersMeta     =  db.sublevel(github.usersMeta, { valueEncoding: 'json' })
+    , byOwner       =  db.sublevel(github.byOwner, { valueEncoding: 'utf8' })
+    , githubStarred =  db.sublevel(github.starred,   { valueEncoding: 'json' })
     ;
 
   var sub = githubRepos
-    , what = 'all'
+    , what = 'entries'
     , argv = process.argv;
 
   if (~argv.indexOf('--owner')) sub = byOwner
   if (~argv.indexOf('--meta')) sub = usersMeta
   if (~argv.indexOf('--users')) sub = githubUsers
+  if (~argv.indexOf('--starred')) sub = githubStarred
   if (~argv.indexOf('--keys')) what = 'keys'
   if (~argv.indexOf('--values')) what = 'values'
 
@@ -47,11 +49,11 @@ var storeGithubRepos = module.exports = function (db, cb) {
   var dataDir  =  path.join(__dirname, '..', 'data')
     , jsonPath =  path.join(dataDir, filename)
 
-  if (!existsSync(jsonPath)) 
+  if (!existsSync(jsonPath))
     return console.error('Cannot find %s. Please make sure to run fetch-github-repos first', jsonPath);
-    
+
   var json = fs.readFileSync(jsonPath, 'utf8')
-  
+
   db = sublevel(db)
 
   store(db, JSON.parse(json), 'thlorenz', function (err, subs) {
@@ -68,7 +70,7 @@ if (!~process.argv.indexOf('--read'))
     if (err) return leveldb.close(err, db);
     storeGithubRepos(db, retrieve.bind(null, db, leveldb.close))
   })
-else 
+else
   leveldb.open(function (err, db) {
     if (err) return leveldb.close(err, db);
     retrieve(db, leveldb.close)
