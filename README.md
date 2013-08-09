@@ -97,3 +97,27 @@ json file which contains user data you want to store.
 # show all their metadata (i.e. when the user data was last modified)
 ./store-github-repos.js --read --values --meta
 ```
+
+## TODO
+
+Possibly it is better to use a search query since the indicator `Not-Modified` fails more often than not.
+
+[still unstable, but may work](https://help.github.com/articles/searching-repositories#created-and-last-updated)
+
+The below would limit the amount of requests to get the latest repos, however we would not see updates to properties
+like stars.
+
+Also the larger amount of requests is wasted to get all the followers and starred repos. For that there seems to be no
+way to limit with search.
+
+```
+curl -H 'Accept: application/vnd.github.preview' \
+'https://api.github.com/search/repositories?q=@thlorenz+language:javascript+language:coffeescript+pushed:>=2013-08-08'
+```
+
+The below would gain a small gain, but at least make sure we get all necessary updates:
+```
+# not limiting by date
+curl -H 'Accept: application/vnd.github.preview' \
+'https://api.github.com/search/repositories?q=@thlorenz+language:javascript+language:coffeescript'
+```
