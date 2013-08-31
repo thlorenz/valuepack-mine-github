@@ -1,6 +1,6 @@
 {
   "name": "valuepack-mine-github",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Mines github for user and repository data used by valuepack.",
   "main": "index.js",
   "scripts": {
