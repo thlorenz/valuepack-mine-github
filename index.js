@@ -1,30 +1,35 @@
 'use strict';
 
 var leveldb             =  require('valuepack-core/mine/leveldb')
+  , log                 =  require('valuepack-core/util/log')
   , updateMultipleUsers =  require('./lib/update-multiple-github-users')
 
-module.exports = exports = function (usernames, cb) {
-  leveldb.open(function (err, db) {
-    if (err) return leveldb.close(err);
-    db = require('level-sublevel')(db);
-
-    updateMultipleUsers(db, usernames, function (err, res) {
-      if (err) return console.error(err);
-    })
-    .on('error', function (err) {
-      console.error(err);
-      console.error(err.stack);
-    })
-    .on('stored', function (info) {
-      console.log('stored\n', info);  
-    })
-    .on('pause', function (timeout) {
-      console.log('ran out of requests, pausing for %sms', timeout)  
-    })
-    .on('end', function () {
-      leveldb.close();
-      cb();
-    });
+/**
+ * Fetches all npm users and npm package and stores them in the given db.
+ * 
+ * @name exports
+ * @function
+ * @param db {LevelDB} expected have sublevel mixed in which is done via the leveldb.open() call
+ * @param githublogins {[String]} github usernamse (logins) for which to update github
+ * @param cb {Function} called back with an error or a sublevel response
+ */
+module.exports = exports = function (db, githubLogins, cb) {
+  updateMultipleUsers(db, githubLogins, function (err, res) {
+    if (err) return log.error('mine-github', err);
+  })
+  .on('error', function (err) {
+    log.error('mine-github', err);
+    log.error('mine-github', err.stack);
+  })
+  .on('stored', function (info) {
+    log.info('mine-github', 'stored\n', info);  
+  })
+  .on('pause', function (timeout) {
+    log.info('mine-github', 'ran out of requests, pausing for %sms', timeout)  
+  })
+  .on('end', function () {
+    leveldb.close();
+    cb();
   });
 };
 
