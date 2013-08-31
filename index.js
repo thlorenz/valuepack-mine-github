@@ -14,6 +14,8 @@ var leveldb             =  require('valuepack-core/mine/leveldb')
  * @param cb {Function} called back with an error or a sublevel response
  */
 module.exports = exports = function (db, githubLogins, cb) {
+  log.info('mine-github', 'Mining github data for %d logins', githubLogins.length);
+
   updateMultipleUsers(db, githubLogins, function (err, res) {
     if (err) return log.error('mine-github', err);
   })
