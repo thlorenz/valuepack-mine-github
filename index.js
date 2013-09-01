@@ -16,9 +16,7 @@ var leveldb             =  require('valuepack-core/mine/leveldb')
 module.exports = exports = function (db, githubLogins, cb) {
   log.info('mine-github', 'Mining github data for %d logins', githubLogins.length);
 
-  updateMultipleUsers(db, githubLogins, function (err, res) {
-    if (err) return log.error('mine-github', err);
-  })
+  updateMultipleUsers(db, githubLogins)
   .on('error', function (err) {
     log.error('mine-github', err);
     log.error('mine-github', err.stack);
@@ -30,8 +28,7 @@ module.exports = exports = function (db, githubLogins, cb) {
     log.info('mine-github', 'ran out of requests, pausing for %sms', timeout)  
   })
   .on('end', function () {
-    leveldb.close();
-    cb();
+    leveldb.close(null, db, cb);
   });
 };
 
