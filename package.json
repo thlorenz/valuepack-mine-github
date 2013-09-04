@@ -21,8 +21,8 @@
     "request-all-pages": "~0.2.3",
     "valuepack-core": "~0.3.9",
     "asyncreduce": "~0.1.4",
-    "level-batcher": "0.0.2",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "level-batcher": "git://github.com/thlorenz/level-batcher"
   },
   "devDependencies": {
     "tap": "~0.4.3",
