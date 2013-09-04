@@ -7,11 +7,9 @@ var test     =  require('tap').test
   , dump     =  require('level-dump')
   , level    =  require('level-test')({ mem: true })
   , sublevel =  require('level-sublevel')
+  , sublevels =  require('valuepack-core/mine/sublevels')
   , store    =  require('../lib/store-github-repos')
   ;
-
-//TODO: broken after using level-batcher - FIX ASAP
-return;
 
 // files contain the following data:
 //  user with 5 followers, dwcook, tomplays, jasonkostempski, jeffchuber, daaku
@@ -32,7 +30,7 @@ test('\nwhen storing existing user and repos were not modified', function (t) {
         
         var users = []
         dump(
-            res.sublevels.githubUsers
+          sublevels(db).github.users
           , [].push.bind(users)
           , function () {
               var fst = users[0];

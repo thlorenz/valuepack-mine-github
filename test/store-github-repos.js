@@ -6,17 +6,14 @@ var test      =  require('tap').test
   , dump      =  require('level-dump')
   , level     =  require('level-test')({ mem: true })
   , sublevel  =  require('level-sublevel')
-  , store     =  require('../lib/store-github-repos')
   , sublevels =  require('valuepack-core/mine/sublevels')
+  , store     =  require('../lib/store-github-repos')
 
 // file contains the following data:
 //  user with 5 followers, dwcook, tomplays, jasonkostempski, jeffchuber, daaku
 //  3 repos(1 php, 2 javascript) 
 //  4 starred repos, 2 by the github user
 var json = fs.readFileSync(__dirname + '/fixtures/repos-isaacs.json', 'utf8')
-
-//TODO: broken after using level-batcher - FIX ASAP
-return;
 
 test('\nwhen storing user with 5 followers and 3 repos one of which is php', function (t) {
   var db = sublevel(level(null, { valueEncoding: 'json' }))
@@ -101,7 +98,7 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
     t.test('\n# stores user starred repos correctly', function (t) {
       var starred = []
       dump(
-          res.sublevels.githubStarred
+          sublevels(db).github.starred
         , [].push.bind(starred)
         , function (err) {
             if (err) console.error(err);
@@ -123,7 +120,7 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
     t.test('\n# stores user meta data correctly', function (t) {
       var metas = []
       dump(
-          res.sublevels.usersMeta
+          sublevels(db).github.usersMeta
         , [].push.bind(metas)
         , function (err) {
             if (err) console.error(err);
@@ -148,7 +145,7 @@ test('\nwhen storing user with 5 followers and 3 repos one of which is php', fun
     t.test('\n# indexes repos by owner', function (t) {
       var owners = []
       dump(
-          res.sublevels.byOwner
+          sublevels(db).github.byOwner
         , [].push.bind(owners)
         , function (err) {
             if (err) console.error(err);
