@@ -9,27 +9,35 @@ var leveldb             =  require('valuepack-core/mine/leveldb')
  * 
  * @name exports
  * @function
- * @param db {LevelDB} expected have sublevel mixed in which is done via the leveldb.open() call
+ * @param db {LevelDB} expected to have sublevel mixed in which is done via the leveldb.open() call
  * @param githublogins {[String]} github usernamse (logins) for which to update github
+ * @param opts {Object} 
+ *  - skipExistingLogins {Boolean}
  * @param cb {Function} called back with an error or a sublevel response
  */
-module.exports = exports = function (db, githubLogins, cb) {
-  log.info('mine-github', 'Mining github data for %d logins', githubLogins.length);
+module.exports = exports = function (db, githubLogins, opts, cb) {
+  if (typeof opts === 'function') {
+    cb = opts;
+   opts = null;
+  }
 
-  updateMultipleUsers(db, githubLogins)
-  .on('error', function (err) {
-    log.error('mine-github', err);
-    log.error('mine-github', err.stack);
-  })
-  .on('stored', function (info) {
-    log.info('mine-github', 'stored\n', info);  
-  })
-  .on('pause', function (timeout) {
-    log.info('mine-github', 'ran out of requests, pausing for %sms', timeout)  
-  })
-  .on('end', function () {
-    leveldb.close(null, db, cb);
-  });
+  log.info('mine-github', 'Mining github data for %d logins', githubLogins.length, opts);
+
+  updateMultipleUsers(db, githubLogins, opts)
+    .on('error', function (err) {
+      log.error('mine-github', err);
+      log.error('mine-github', err.stack);
+    })
+    .on('stored', function (info) {
+      log.info('mine-github', 'stored\n', info);  
+    })
+    .on('pause', function (timeout) {
+      log.info('mine-github', 'ran out of requests, pausing for %sms', timeout)  
+    })
+    .on('end', function () {
+      log.info('mine-github', 'done, closing db');
+      leveldb.close(null, db, cb);
+    });
 };
 
 exports.updateMultipleUsers =  updateMultipleUsers;
