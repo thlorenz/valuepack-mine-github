@@ -31,7 +31,8 @@
     "level-dump": "~0.4.0",
     "nave": "~0.4.3",
     "heapdump": "~0.2.1",
-    "level-sublevel": "~5.1.1"
+    "level-sublevel": "~5.1.1",
+    "tap-stream": "~0.2.0"
   },
   "keywords": [
     "mine",

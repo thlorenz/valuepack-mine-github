@@ -2,7 +2,7 @@
 
 var leveldb             =  require('valuepack-core/mine/leveldb')
   , log                 =  require('valuepack-core/util/log')
-  , updateMultipleUsers =  require('./lib/update-multiple-github-users')
+  , multiFetchStorePipe =  require('./lib/multi-fetch-store-pipe')
 
 /**
  * Fetches all npm users and npm package and stores them in the given db.
@@ -23,7 +23,7 @@ module.exports = exports = function (db, githubLogins, opts, cb) {
 
   log.info('mine-github', 'Mining github data for %d logins', githubLogins.length, opts);
 
-  updateMultipleUsers(db, githubLogins, opts)
+  multiFetchStorePipe(db, githubLogins, opts)
     .on('error', function (err) {
       log.error('mine-github', err);
       log.error('mine-github', err.stack);
@@ -40,7 +40,7 @@ module.exports = exports = function (db, githubLogins, opts, cb) {
     });
 };
 
-exports.updateMultipleUsers =  updateMultipleUsers;
+//exports.updateMultipleUsers =  updateMultipleUsers;
 exports.fetchGithubRepos    =  require('./lib/fetch-github-repos');
 exports.storeGithubRepos    =  require('./lib/store-github-repos');
 exports.updateGithubRepos   =  require('./lib/update-github-repos');
