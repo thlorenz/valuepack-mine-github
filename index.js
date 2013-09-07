@@ -31,8 +31,8 @@ module.exports = exports = function (db, githubLogins, opts, cb) {
     .on('stored', function (info) {
       log.info('mine-github', 'stored\n', info);  
     })
-    .on('pause', function (timeout) {
-      log.info('mine-github', 'ran out of requests, pausing for %sms', timeout)  
+    .on('wait', function (timeout) {
+      log.info('mine-github', 'ran out of requests, waiting for %sms', timeout)  
     })
     .on('end', function () {
       log.info('mine-github', 'done, closing db');
