@@ -50,6 +50,10 @@ module.exports = exports = function (db, githubLogins, opts, cb) {
     })
     .on('end', function () {
       log.info('mine-github', 'done');
+    })
+    .on('close', function () {
+      log.info('mine-github', 'db closed');
+      cb();
     });
 };
 
